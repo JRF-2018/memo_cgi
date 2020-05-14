@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-our $VERSION = "0.0.1"; # Time-stamp: <2020-05-14T13:09:15Z>";
+our $VERSION = "0.0.3"; # Time-stamp: <2020-05-14T13:25:25Z>";
 
 ##
 ## Author:
@@ -125,7 +125,7 @@ function resizeTextareaIfSmartphone() {
 <form action="memo.cgi" method="post">
 <textarea id="txt" name="txt" rows="30", cols="80">$txt</textarea>
 <br/>
-<!--
+<\!--
 Pass: <input type="password" name="pass" />
 -->
 <input type="submit" value="Submit" />
