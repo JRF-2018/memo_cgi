@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-our $VERSION = "0.0.7"; # Time-stamp: <2020-05-15T17:41:23Z>";
+our $VERSION = "0.0.8"; # Time-stamp: <2020-05-15T18:12:05Z>";
 
 ##
 ## Author:
@@ -29,6 +29,8 @@ our $TEXT_FILE_2 = "bbs.txt";
 #our $PASSWORD = "test";
 our $TEXT_MAX = 1024 * 1024;
 our $NAME_MAX = 64;
+our $COOKIE_NAME = "simple_bbs_cgi__name";
+our $COOKIE_PATH = "/";
 our $CGI = CGI->new;
 binmode(STDOUT, ":utf8");
 
@@ -119,7 +121,7 @@ sub main {
   my $txt1;
   my $txt2;
 
-  my $name = decode('UTF-8', $CGI->cookie('name') || '');
+  my $name = decode('UTF-8', $CGI->cookie($COOKIE_NAME) || '');
   if (length($name) > $NAME_MAX) {
     $name = substr($name, 0, $NAME_MAX);
   }
@@ -162,7 +164,8 @@ sub main {
     $txt2 = txt_read($TEXT_FILE_2);
   }
 
-  my $ncookie = $CGI->cookie(-name => 'name',
+  my $ncookie = $CGI->cookie(-name => $COOKIE_NAME,
+			     -path => $COOKIE_PATH,
 			     -value => encode('UTF-8', $name),
 			     -expires => '+1y');
   print $CGI->header(-type => 'text/html',
