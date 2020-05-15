@@ -1,11 +1,11 @@
-# The simplest memo.cgi
+# The simplest memo.cgi & dual_memo.cgi
 
-<!-- Time-stamp: "2020-05-14T13:23:22Z" -->
+<!-- Time-stamp: "2020-05-15T05:58:11Z" -->
 
-Usage: Read the source.
+Usage: Read the sources.
 
 ## License
 
-Public Domain (because this program is as small as a mathematical formula).
+Public Domain (because these programs are as small as mathematical formulae).
 
-You can freely modify and re-publish it.
+You can freely modify and re-publish them.
