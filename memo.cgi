@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-our $VERSION = "0.0.3"; # Time-stamp: <2020-05-14T13:25:25Z>";
+our $VERSION = "0.0.4"; # Time-stamp: <2020-05-15T04:18:31Z>";
 
 ##
 ## Author:
@@ -13,7 +13,7 @@ our $VERSION = "0.0.3"; # Time-stamp: <2020-05-14T13:25:25Z>";
 ## License:
 ##
 ##   Public Domain
-##   (because this program is as small as mathematical formulae).
+##   (because this program is as small as a mathematical formula).
 ##
 
 use strict;
@@ -34,7 +34,7 @@ $SIG{__DIE__} = sub {
   my $message = shift;
   print $CGI->header(-type => 'text/html',
 		     -charset => 'utf-8',
-		     -status => '400');
+		     -status => '500 Internal Server Error');
   print <<"EOT";
 <\!DOCTYPE html>
 <html>
@@ -60,12 +60,11 @@ sub escape_html {
 }
 
 sub main {
-  my $txt;
-#  my $pass = $CGI->param('pass');
-#  die "Wrong password." if $pass ne $PASSWORD;
-  my $cmd = $CGI->param('cmd');
-  if (defined $cmd && $cmd eq 'write') {
-    $txt = Encode::decode('UTF-8', $CGI->param('txt'));
+  my $txt = $CGI->param('txt');
+  if (defined $txt) {
+    # my $pass = $CGI->param('pass');
+    # die "Wrong password." if ! defined $pass || $pass ne $PASSWORD;
+    $txt = Encode::decode('UTF-8', $txt);
     if (length($txt) > $TEXT_MAX) {
       $txt = substr($txt, 0, $TEXT_MAX);
     }
@@ -97,7 +96,7 @@ sub main {
 		     -charset => 'utf-8');
   $txt = escape_html($txt);
   print <<"EOT";
-<\!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -105,11 +104,11 @@ sub main {
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 
 <title>Memo</title>
-<\!-- memo.cgi version $VERSION -->
+<!-- memo.cgi version $VERSION -->
 <style type="text/css">
 </style>
 <script type="text/javascript">
-<\!--
+<!--
 function resizeTextareaIfSmartphone() {
   if (window.matchMedia
       && window.matchMedia('(max-device-width: 640px)').matches) {
@@ -125,11 +124,10 @@ function resizeTextareaIfSmartphone() {
 <form action="memo.cgi" method="post">
 <textarea id="txt" name="txt" rows="30", cols="80">$txt</textarea>
 <br/>
-<\!--
+<!--
 Pass: <input type="password" name="pass" />
 -->
 <input type="submit" value="Submit" />
-<input type="hidden" name="cmd" value="write" />
 </form>
 </body>
 </html>
