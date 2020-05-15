@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-our $VERSION = "0.0.8"; # Time-stamp: <2020-05-15T18:12:05Z>";
+our $VERSION = "0.0.9"; # Time-stamp: <2020-05-15T18:30:11Z>";
 
 ##
 ## Author:
@@ -101,9 +101,9 @@ sub txt_prepend {
     or die "Cannot lock $file: $!";
   binmode($fh);
   $txt = $txt . decode('UTF-8', join("", <$fh>));
-  while (length($txt) > $TEXT_MAX) {
-    $txt = substr($txt, 0, -1);
-    $txt =~ s/[^\n]+$//s;
+  if (length($txt) > $TEXT_MAX) {
+    $txt = substr($txt, 0, $TEXT_MAX);
+    $txt =~ s/[^\n]+$//s if $txt =~ /\n/s;
   }
   seek($fh, 0, SEEK_SET)
     or die "Cannot seek $file: $!";
@@ -183,7 +183,8 @@ sub main {
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 
 <title>Simple BBS</title>
-<!-- simple_bbs.cgi version $VERSION -->
+<!-- simple_bbs.cgi version $VERSION .
+     You can get it from https://github.com/JRF-2018/memo_cgi . -->
 <style type="text/css">
 </style>
 <script type="text/javascript">
