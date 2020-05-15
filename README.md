@@ -1,6 +1,6 @@
-# The simplest memo.cgi & dual_memo.cgi
+# The simplest memo.cgi & dual_memo.cgi & simple_bbs.cgi
 
-<!-- Time-stamp: "2020-05-15T05:58:11Z" -->
+<!-- Time-stamp: "2020-05-15T13:58:43Z" -->
 
 Usage: Read the sources.
 
