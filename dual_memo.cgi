@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-our $VERSION = "0.0.10"; # Time-stamp: <2020-05-16T02:32:10Z>";
+our $VERSION = "0.0.11"; # Time-stamp: <2020-05-16T10:21:11Z>";
 
 ##
 ## Author:
@@ -91,8 +91,13 @@ sub txt_write {
 }
 
 sub main {
+  my $cmd = $CGI->param('cmd') || 'reload';
   my $flag1 = $CGI->param('flag1') || 0;
   my $flag2 = $CGI->param('flag2') || 0;
+  if ($cmd eq 'reload') {
+    $flag1 = 0;
+    $flag2 = 0;
+  }
   my $txt1;
   my $txt2;
   if ($flag1) {
@@ -175,7 +180,8 @@ onChange="changeText('flag2')">$txt2</textarea>
 <!--
 Pass: <input type="password" name="pass" />
 -->
-<input type="submit" value="Submit" />
+<button type="submit" name="cmd" value="submit">Submit</button>
+<button type="submit" name="cmd" value="reload">Reload</button>
 <input type="hidden" id="flag1" name="flag1" value="1" />
 <input type="hidden" id="flag2" name="flag2" value="1" />
 </form>
