@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-our $VERSION = "0.0.5"; # Time-stamp: <2020-05-15T05:42:08Z>";
+our $VERSION = "0.0.10"; # Time-stamp: <2020-05-16T02:32:10Z>";
 
 ##
 ## Author:
@@ -27,7 +27,7 @@ use Fcntl qw(:DEFAULT :flock :seek);
 our $TEXT_FILE_1 = "memo1.txt";
 our $TEXT_FILE_2 = "memo2.txt";
 #our $PASSWORD = "test";
-our $TEXT_MAX = 1024 * 1024;
+our $TEXT_MAX = int(3000000 / 6); # 6 == safe utf8 max bytes.
 our $CGI = CGI->new;
 binmode(STDOUT, ":utf8");
 
@@ -133,7 +133,8 @@ sub main {
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 
 <title>Dual Memo</title>
-<!-- dual_memo.cgi version $VERSION -->
+<!-- dual_memo.cgi version $VERSION .
+     You can get it from https://github.com/JRF-2018/memo_cgi . -->
 <style type="text/css">
 </style>
 <script type="text/javascript">

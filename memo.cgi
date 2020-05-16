@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-our $VERSION = "0.0.5"; # Time-stamp: <2020-05-15T05:30:28Z>";
+our $VERSION = "0.0.10"; # Time-stamp: <2020-05-16T02:32:46Z>";
 
 ##
 ## Author:
@@ -21,12 +21,12 @@ use warnings;
 use utf8; # Japanese
 
 use CGI;
-use Encode;
+use Encode qw(encode decode);
 use Fcntl qw(:DEFAULT :flock :seek);
 
 our $TEXT_FILE = "memo.txt";
 #our $PASSWORD = "test";
-our $TEXT_MAX = 1024 * 1024;
+our $TEXT_MAX = int(3000000 / 6); # 6 == safe utf8 max bytes.
 our $CGI = CGI->new;
 binmode(STDOUT, ":utf8");
 
@@ -64,7 +64,7 @@ sub main {
   if (defined $txt) {
     # my $pass = $CGI->param('pass');
     # die "Wrong password." if ! defined $pass || $pass ne $PASSWORD;
-    $txt = Encode::decode('UTF-8', $txt);
+    $txt = decode('UTF-8', $txt);
     if (length($txt) > $TEXT_MAX) {
       $txt = substr($txt, 0, $TEXT_MAX);
     }
@@ -75,7 +75,7 @@ sub main {
     seek($fh, 0, SEEK_SET)
       or die "Cannot seek $TEXT_FILE: $!";
     binmode($fh);
-    my $btxt = Encode::encode('UTF-8', $txt);
+    my $btxt = encode('UTF-8', $txt);
     print $fh $btxt
       or die "Cannot Write $TEXT_FILE: $!";
     truncate($fh, length($btxt));
@@ -90,7 +90,7 @@ sub main {
     my $btxt = join("", <$fh>);
     flock($fh, LOCK_UN);
     close($fh);
-    $txt = Encode::decode('UTF-8', $btxt);
+    $txt = decode('UTF-8', $btxt);
   }
   print $CGI->header(-type => 'text/html',
 		     -charset => 'utf-8');
@@ -104,7 +104,8 @@ sub main {
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 
 <title>Memo</title>
-<!-- memo.cgi version $VERSION -->
+<!-- memo.cgi version $VERSION .
+     You can get it from https://github.com/JRF-2018/memo_cgi . -->
 <style type="text/css">
 </style>
 <script type="text/javascript">

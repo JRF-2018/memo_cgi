@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-our $VERSION = "0.0.9"; # Time-stamp: <2020-05-15T18:30:11Z>";
+our $VERSION = "0.0.10"; # Time-stamp: <2020-05-16T02:32:22Z>";
 
 ##
 ## Author:
@@ -27,7 +27,7 @@ use Fcntl qw(:DEFAULT :flock :seek);
 our $TEXT_FILE_1 = "bbs_notice.txt";
 our $TEXT_FILE_2 = "bbs.txt";
 #our $PASSWORD = "test";
-our $TEXT_MAX = 1024 * 1024;
+our $TEXT_MAX = int(3000000 / 6); # 6 == safe utf8 max bytes.
 our $NAME_MAX = 64;
 our $COOKIE_NAME = "simple_bbs_cgi__name";
 our $COOKIE_PATH = "/";
